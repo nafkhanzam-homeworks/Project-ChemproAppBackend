@@ -26,3 +26,4 @@ declare module "express" {
 Logger.init();
 const server = new Server();
 server.start();
+console.log("test changes");
