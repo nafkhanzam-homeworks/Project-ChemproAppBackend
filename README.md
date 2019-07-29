@@ -1,7 +1,7 @@
 PEMBAGIAN TUGAS BACKEND:
  - Struktur API Url (Jonet, Samuel, Hadi, Adit)
 	 - Ngapain?
-		 - Dari database, dibikinlah url untuk mengakses data di database tersebut. Contoh: GET chempro.com/api/questions/17, akan mendapatkan data object question dari database yang id-nya "17". Contoh lainnya, POST chempro.com/api/questions DATA { question: "satu tambah satu berapa kak?" } akan nambah object question ke dalam database.
+		 - Dari database, dibikinlah url untuk mengakses data di database tersebut. Contoh: GET chempro.com/api/questions/17, akan mendapatkan data object question dari database yang id-nya "17". Contoh lainnya, `POST chempro.com/api/questions DATA { question: "satu tambah satu berapa kak?" }` akan nambah object question ke dalam database.
 	 - Referensi:
 		 - [https://restfulapi.net/resource-naming/](https://restfulapi.net/resource-naming/)
 		 - [https://www.restapitutorial.com/lessons/restfulresourcenaming.html](https://www.restapitutorial.com/lessons/restfulresourcenaming.html)
@@ -10,6 +10,11 @@ PEMBAGIAN TUGAS BACKEND:
 	 - Ngapain?
 		 - Bikin struktur object database yang tiap object tersebut punya variabel2 yang berguna dan akan diakses oleh aplikasinya. Contoh: Objectnya User, punya variabel string nama, string NIM, string password. Contoh lainnya, objectnya Question, punya variabel string question, array of string answers, integer index jawaban terbaik di array answers, dll..
 	 - Referensi:
-		 - [https://mongoosejs.com/docs/guide.html](https://mongoosejs.com/docs/guide.html)
+		 - https://mongoosejs.com/docs/guide.html
 		 - [src/database/schemas](https://github.com/nafkhanzam/chempro_backend/tree/master/src/database/schemas)
- - unit & integrasi test: ???
+ - Unit & Integrasi test
+    - Ngapain?
+        - Ngetes url2nya bisa menghasilkan hasil yg diinginkan atau ngga.
+    - Referensi:
+        - https://jestjs.io/docs/en/getting-started.html
+        - http://zetcode.com/javascript/jest/

@@ -1,9 +1,8 @@
 import express from "express";
-import mongoose from "mongoose";
 import ApiError from "../ApiError";
 import ApiWrapper from "../ApiWrapper";
 import Config from "../Config";
-import { bcryptCompare, createUserDTO, getCrud, getLocals, userModel, UserRole } from "../database/schemas/user";
+import { bcryptCompare, createUserDTO, getLocals, userModel, UserRole } from "../database/schemas/user";
 import Utils from "../Utils";
 
 // TODO: Add api object to wrap the arguments to be catchable async function..
@@ -85,52 +84,6 @@ const checkRole = (userRole: UserRole): express.RequestHandler => (_req, res, ne
 */
 api.get("/users", checkRole(UserRole.ADMIN), async (_req, res) => {
     return res.send(await userModel.find().exec());
-});
-
-// ROLE: UserRole.MANAGER
-// '/(teams|matches|players)(/:id)?'
-api.get(/^\/(teams|matches|players)\/:id/i, checkRole(UserRole.MANAGER), async (req, res) => {
-    const { user } = getLocals(res);
-    if (!user)
-        throw ApiError.NOT_PERMITTED;
-    // NOTE: too ugly?
-    const owned = getCrud(req);
-    const id = req.params.id;
-    res.send(id ? await user.getOwn(owned, id) : await user.getOwns(owned));
-});
-
-api.post(/^\/((teams|matches|players)\/?)$/i, checkRole(UserRole.MANAGER), async (req, res) => {
-    const { user } = getLocals(res);
-    if (!user)
-        throw ApiError.NOT_PERMITTED;
-    // NOTE: too ugly?
-    const owned = getCrud(req);
-    const result = await owned.crud.post(owned.createDto(req.body));
-    user[owned.typeOwned].push(result._id);
-    await user.save();
-    res.send(result);
-});
-
-api.put(/^\/(teams|matches|players)\/:id/i, checkRole(UserRole.MANAGER), async (req, res) => {
-    const { user, role } = getLocals(res);
-    if (!user)
-        throw ApiError.NOT_PERMITTED;
-    const owned = getCrud(req);
-    const id: string = req.params.id;
-    if (!user[owned.typeOwned].includes(new mongoose.Schema.Types.ObjectId(id)) && role !== UserRole.ADMIN)
-        throw ApiError.NOT_PERMITTED;
-    res.send(await owned.crud.put(id, owned.createDto(req.body)));
-});
-
-api.delete(/^\/(teams|matches|players)\/:id/i, checkRole(UserRole.MANAGER), async (req, res) => {
-    const { user, role } = getLocals(res);
-    if (!user)
-        throw ApiError.NOT_PERMITTED;
-    const owned = getCrud(req);
-    const id: string = req.params.id;
-    if (!user[owned.typeOwned].includes(new mongoose.Schema.Types.ObjectId(id)) && role !== UserRole.ADMIN)
-        throw ApiError.NOT_PERMITTED;
-    res.send(await owned.crud.delete(id));
 });
 
 // ROLE: UserRole.ADMIN

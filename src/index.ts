@@ -10,8 +10,6 @@ process.on("uncaughtException", (err) => {
 	throw err;
 });
 
-require("express-async-errors");
-
 // Auto receive connection every 20 minutes to avoid heroku's 30 minutes limitation.
 if (Config.MODE === AppMode.PRODUCTION)
 	require("heroku-self-ping")(Config.URL);
