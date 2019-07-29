@@ -1,28 +1,24 @@
-import Logger from './Logger';
-import Server from './Server';
-import Config from './Config';
-import AppMode from './AppMode';
+import AppMode from "./AppMode";
+import Config from "./Config";
+import Logger from "./Logger";
+import Server from "./Server";
 
+// Handle unhandled errors
+process.on("uncaughtException", (err) => {
+	Logger.err(err);
+}).on("unhandledRejection", (err) => {
+	throw err;
+});
+
+require("express-async-errors");
+
+// Auto receive connection every 20 minutes to avoid heroku's 30 minutes limitation.
 if (Config.MODE === AppMode.PRODUCTION)
-    require('heroku-self-ping')(Config.URL);
-
-declare module "express" {
-    export interface Request<
-      Body = any,
-      Query = any,
-      Params = any,
-      Cookies = any,
-    > extends Express.Request {
-      body: Body;
-      query: Query;
-      params: Params;
-      cookies: Cookies;
-    }
-    export interface Response<Locals = any> extends Express.Response {
-        locals: Locals;
-    }
-}
+	require("heroku-self-ping")(Config.URL);
 
 Logger.init();
+
+// Start server
 const server = new Server();
+// tslint:disable-next-line: no-floating-promises
 server.start();
