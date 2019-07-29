@@ -9,6 +9,12 @@ PEMBAGIAN TUGAS BACKEND:
  - Skema database (yuni)
 	 - Ngapain?
 		 - Bikin struktur object database yang tiap object tersebut punya variabel2 yang berguna dan akan diakses oleh aplikasinya. Contoh: Objectnya User, punya variabel string nama, string NIM, string password. Contoh lainnya, objectnya Question, punya variabel string question, array of string answers, integer index jawaban terbaik di array answers, dll..
+		 - Database list:
+		 	- user
+			- product
+			- feedback
+			- information
+			- qna
 	 - Referensi:
 		 - https://mongoosejs.com/docs/guide.html
 		 - [src/database/schemas](https://github.com/nafkhanzam/chempro_backend/tree/master/src/database/schemas)
