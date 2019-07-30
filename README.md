@@ -3,8 +3,9 @@ PEMBAGIAN TUGAS BACKEND:
 	 - Ngapain?
 		 - Dari database, dibikinlah url untuk mengakses data di database tersebut. Contoh: `GET chempro.com/api/questions/17`, akan mendapatkan data object question dari database yang id-nya "17". Contoh lainnya, `POST chempro.com/api/questions DATA { question: "satu tambah satu berapa kak?" }` akan nambah object question ke dalam database.
 	 - Referensi:
-		 - [https://restfulapi.net/resource-naming/](https://restfulapi.net/resource-naming/)
-		 - [https://www.restapitutorial.com/lessons/restfulresourcenaming.html](https://www.restapitutorial.com/lessons/restfulresourcenaming.html)
+		 - https://restfulapi.net/resource-naming/
+		 - https://www.restapitutorial.com/lessons/restfulresourcenaming.html
+		 - https://blog.mwaysolutions.com/2014/06/05/10-best-practices-for-better-restful-api/
  - kodingan API: camcam
  - Skema database (yuni)
 	 - Ngapain?
