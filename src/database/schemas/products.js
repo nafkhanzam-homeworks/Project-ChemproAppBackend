@@ -18,7 +18,7 @@ var productSchema = new Schema({
         required: true,
     },
     description: String
-}); {timestamps: true};
+});
 
 
 // creating a model

@@ -29,7 +29,7 @@ var userSchema = new Schema({
         type: Number,
         required: true
     }
-}); {timestamps: true}
+});
 
 // creating a model
 // var user = mongoose.model('users', userSchema);
