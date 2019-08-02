@@ -16,7 +16,8 @@ var productSchema = new Schema({
         required: true,
     },
     description: String
-});
+}); 
+
 
 // creating a model
 // var user = mongoose.model('users', userSchema);

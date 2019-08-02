@@ -1,40 +1,27 @@
-import winston from 'winston';
-import WinstonDailyRotateFile from 'winston-daily-rotate-file';
-import Utils from './Utils';
+import winston from "winston";
+import WinstonDailyRotateFile from "winston-daily-rotate-file";
+import Utils from "./Utils";
 
 export default class Logger {
-	private static initWinston() {
+	public static init() {
 		winston.clear().add(
 			new WinstonDailyRotateFile({
-				filename: 'logs/application-%DATE%.log',
-				datePattern: 'YYYY-MM-DD-HH',
+				datePattern: "YYYY-MM-DD-HH",
+				filename: "logs/application-%DATE%.log",
+				maxFiles: "14d",
+				maxSize: "20m",
 				zippedArchive: false,
-				maxSize: '20m',
-				maxFiles: '14d',
 			}),
 		);
 	}
-	private static handleUncaughtException() {
-		process.on('uncaughtException', err => {
-			Logger.err(err);
-			process.exit(1);
-		});
-		process.on('unhandledRejection', err => {
-			throw err;
-		});
-	}
-	static init() {
-		this.initWinston();
-		this.handleUncaughtException();
-	}
-	static log(...arr: any[]) {
-		arr.forEach(any => {
+	public static log(...arr: any[]) {
+		arr.forEach((any) => {
 			console.log(any);
 			winston.info(Utils.stringify(any));
 		});
 	}
-	static err(...arr: any[]) {
-		arr.forEach(any => {
+	public static err(...arr: any[]) {
+		arr.forEach((any) => {
             console.error(any);
 			winston.error(Utils.stringify(any));
         });

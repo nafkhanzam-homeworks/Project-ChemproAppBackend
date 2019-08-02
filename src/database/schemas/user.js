@@ -29,6 +29,9 @@ var userSchema = new Schema({
         required: true
     }
 });
+
 // creating a model
 // var user = mongoose.model('users', userSchema);
+
 module.exports = mongoose.model('users', userSchema);
+

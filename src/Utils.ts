@@ -1,34 +1,51 @@
-import safeJsonStringify from 'safe-json-stringify';
-import serializeError from 'serialize-error';
-import mongoose from 'mongoose';
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
-import ApiError from './api/ApiError';
-import Config from './Config';
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
+import safeJsonStringify from "safe-json-stringify";
+import serializeError from "serialize-error";
+import ApiError from "./ApiError";
+import Config from "./Config";
 
 export default class Utils {
-	static stringify(obj: any): string {
+	public static stringify(obj: any): string {
 		if (obj instanceof Error)
 			return safeJsonStringify(serializeError(obj));
 		return safeJsonStringify(obj);
 	}
-	static async resolve(promise: Promise<any>): Promise<[any, any]> {
-		let result = null, error = null;
+	public static async resolve(promise: Promise<any>): Promise<[any, any]> {
+		let result = null;
+		let error = null;
 		try {
 			result = await promise;
 		} catch (err) {
+			// console.log("ERROR STARTS HERE:::++++++++++++++++++");
+			// console.log(serializeError(err));
+			// console.log("ERROR ENDS HERE:::++++++++++++++++++");
 			error = err;
 		}
 		return [error, result];
 	}
-	static generateToken(id: string, rememberMe: boolean) {
-		return jwt.sign(id, Config.TOKEN_PASSKEY, { expiresIn: Config.TOKEN_EXPIRES(rememberMe) });
+	public static generateToken(id: string, rememberMe: boolean) {
+		return jwt.sign({ id }, Config.TOKEN_PASSKEY, { expiresIn: rememberMe ? Config.TOKEN_EXPIRES_LONGER : Config.TOKEN_EXPIRES });
 	}
-	static async bcryptHash(password: string): Promise<string> {
+	public static async bcryptHash(password: string): Promise<string> {
 		return await bcrypt.hash(password, 10);
 	}
-	static crud = <T extends mongoose.Document>(Model: mongoose.Model<T>) => ({
-		getAll: async (props?: any): Promise<Array<T>> => {
+	public static getErrorMessage(error: any) {
+		return error.response ?
+			error.response.data ?
+			error.response.data.formattedMessage ?
+				error.response.data.formattedMessage
+			: error.response.data
+			: error.response.statusText ?
+			error.response.statusText
+			: error.response
+		: error.message ?
+			error.message
+		: error;
+	}
+	public static crud = <T extends mongoose.Document>(Model: mongoose.Model<T>) => ({
+		getAll: async (props?: any): Promise<T[]> => {
 			return await Model.find({}, props).exec();
 		},
 		get: async (id: string, props?: any): Promise<T> => {
@@ -62,5 +79,5 @@ export default class Utils {
 				throw ApiError.INTERNAL_SERVER_ERROR;
 			return res;
         },
-	});
+	})
 }
