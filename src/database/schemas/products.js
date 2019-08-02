@@ -8,18 +8,15 @@ var productSchema = new Schema({
         required: true,
     },
     kind: {
-        book: Boolean,
-        clothing: Boolean,
-        alattulis: Boolean,
-        required: true,
+        enum: ["book", "clothing", "alattulis" ],
+        required: true
     }, 
     price:{
         type: Number,
         required: true,
     },
     description: String
-}); {timestamps: true};
-
+});
 
 // creating a model
 // var user = mongoose.model('users', userSchema);

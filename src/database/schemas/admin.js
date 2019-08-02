@@ -1,16 +1,11 @@
-//'use strict';
 // defining schema
 var mongoose = require ('mongoose');
 var Schema = mongoose.Schema;
 
-var userSchema = new Schema({
+var adminSchema = new Schema({
     fullname: {
         first: String,
         last: String,
-        required: true
-    },
-    address: {
-        type: String,
         required: true
     }, 
     username:{
@@ -24,11 +19,8 @@ var userSchema = new Schema({
         unique: true,
         required: true
     },
-    phone: {
-        type: Number,
-        required: true
-    }
-});
+    phone: Number
+}); {timestamps: true}
 // creating a model
 // var user = mongoose.model('users', userSchema);
-module.exports = mongoose.model('users', userSchema);
+module.exports = mongoose.model('admin', adminSchema);
