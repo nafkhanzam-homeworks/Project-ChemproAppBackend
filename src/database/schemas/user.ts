@@ -5,31 +5,31 @@ import jwt from 'jsonwebtoken';
 import express from 'express';
 import Utils from '../../Utils';
 
-export interface User extends mongoose.Document {
+export interface IUser extends mongoose.Document {
 	fullname: string;
 	email: string;
 	password: string;
 	role: UserRole;
+	NIM: string;
 }
 
 export enum UserRole { // Will be used as integer greater or lower comparation
 	GUEST = 0,
-	USER = 1,
-	MANAGER = 9,
+	BUYER = 1,
 	ADMIN = 99,
 }
 
-export const bcryptCompare = async (user: User, password: string): Promise<boolean> => {
+export const bcryptCompare = async (user: IUser, password: string): Promise<boolean> => {
 	return await bcrypt.compare(password, user.password);
 };
 
-export const getUserFromToken = async (token: string): Promise<User | null> => {
+export const getUserFromToken = async (token: string): Promise<IUser | null> => {
 	return await userModel.findById(jwt.decode(token)).exec();
 };
 
 export const getLocals = ({ locals }: express.Response) => ({
 	role: locals.userRole as UserRole,
-	user: locals.user as User | null,
+	user: locals.user as IUser | null,
 });
 
 const userSchema = new mongoose.Schema({
@@ -51,10 +51,12 @@ const userSchema = new mongoose.Schema({
 		type: UserRole,
 		default: UserRole.GUEST,
 	},
+	NIM: String,
+	// Add normal student properties
 });
 
-export const createUserDTO = (obj: object) => _.pick(obj, ['fullname', 'fullname', 'email', 'password']);
+export const createUserDTO = (obj: object) => _.pick(obj, ['fullname', 'email', 'password']);
 
-export const userModel = mongoose.model<User>('User', userSchema);
+export const userModel = mongoose.model<IUser>('User', userSchema);
 
-export const userCRUD = Utils.crud<User>(userModel);
+export const userCRUD = Utils.crud<IUser>(userModel);
