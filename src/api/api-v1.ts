@@ -2,7 +2,7 @@ import express from "express";
 import ApiError from "../ApiError";
 import ApiWrapper from "../ApiWrapper";
 import Config from "../Config";
-import { bcryptCompare, createUserDTO, getLocals, userModel, UserRole } from "../database/schemas/user";
+import { bcryptCompare, createUserDTO, getLocals, userModel } from "../database/schemas/user";
 import Utils from "../Utils";
 
 // TODO: Add api object to wrap the arguments to be catchable async function..
@@ -17,7 +17,6 @@ function sendAuthCookie(res: express.Response, _id: string, rememberMe: boolean)
     }).send();
 }
 
-// ROLE: UserRole.GUEST
 /*
     USE (/api/v1/register) {
         fullname, email, password
@@ -71,21 +70,21 @@ api.use("/logout", (_req, res) => {
     res.clearCookie(Config.TOKEN_HEADER).send();
 });
 
-const checkRole = (userRole: UserRole): express.RequestHandler => (_req, res, next) => {
-    const { user, role } = getLocals(res);
-    if (!user || role < userRole)
-        throw ApiError.NOT_PERMITTED;
-    next();
-};
+// const checkRole = (userRole: UserRole): express.RequestHandler => (_req, res, next) => {
+//     const { user, role } = getLocals(res);
+//     if (!user || role < userRole)
+//         throw ApiError.NOT_PERMITTED;
+//     next();
+// };
 
-// ROLE: UserRole.USER
-/*
-    GET (/api/v1/users) => Array of User object
-*/
-api.get("/users", checkRole(UserRole.ADMIN), async (_req, res) => {
-    return res.send(await userModel.find().exec());
-});
+// // ROLE: UserRole.USER
+// /*
+//     GET (/api/v1/users) => Array of User object
+// */
+// api.get("/users", checkRole(UserRole.ADMIN), async (_req, res) => {
+//     return res.send(await userModel.find().exec());
+// });
 
-// ROLE: UserRole.ADMIN
+// // ROLE: UserRole.ADMIN
 
 export default api.apply(_api);

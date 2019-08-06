@@ -18,5 +18,4 @@ Logger.init();
 
 // Start server
 const server = new Server();
-// tslint:disable-next-line: no-floating-promises
 server.start();

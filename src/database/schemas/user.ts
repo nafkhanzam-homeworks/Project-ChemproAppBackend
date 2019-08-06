@@ -52,7 +52,6 @@ const userSchema = new mongoose.Schema({
 		default: UserRole.GUEST,
 	},
 	NIM: String,
-	// Add normal student properties
 });
 
 export const createUserDTO = (obj: object) => _.pick(obj, ['fullname', 'email', 'password']);
