@@ -1,3 +1,29 @@
+# FRONTEND READ THIS!
+
+Untuk Register
+```
+POST (/api/v1/register) 
+BODY: {
+		fullname, email, password
+	  }
+RESPONSE: OK Response (auth cookie will be set)
+```
+
+Untuk Login
+```
+POST (/api/v1/login) 
+BODY: {
+		email, password
+	  }
+RESPONSE: OK Response (auth cookie will be set)
+```
+
+Untuk Logout
+```
+POST (/api/v1/logout)
+RESPONSE: OK Response (auth cookie will be set null)
+```
+
 PEMBAGIAN TUGAS BACKEND:
  - Struktur API Url (Jonet, Samuel, Hadi, Adit)
 	 - Ngapain?
