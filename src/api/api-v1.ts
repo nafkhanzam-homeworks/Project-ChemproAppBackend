@@ -4,6 +4,7 @@ import ApiWrapper from "../ApiWrapper";
 import Config from "../Config";
 import { bcryptCompare, createUserDTO, getLocals, userModel } from "../database/schemas/user";
 import Utils from "../Utils";
+import { productCRUD } from "../database/schemas/product";
 
 // TODO: Add api object to wrap the arguments to be catchable async function..
 const _api = express.Router();
@@ -74,9 +75,8 @@ api.use("/logout", (_req, res) => {
     GET (/api/v1/store) => product object {name, price}
 */
 
-api.use ("/store", (_req, res) => {
-    const { 
-
+api.use ("/store", async (_req, res) => {
+    res.send(await productCRUD.getAll());
 });
 
 // const checkRole = (userRole: UserRole): express.RequestHandler => (_req, res, next) => {
