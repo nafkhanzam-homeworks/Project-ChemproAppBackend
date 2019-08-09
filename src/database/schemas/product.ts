@@ -21,6 +21,9 @@ const productSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    qty: {
+        type: Number,
+    },
     description: {
         type: String,
         required: true,
