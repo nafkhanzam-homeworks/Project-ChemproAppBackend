@@ -41,10 +41,10 @@ api.use("/login", async (req: express.Request, res) => {
     const { user } = getLocals(res);
     if (user)
         throw ApiError.LOGOUT_FIRST;
-    const { email, password } = req.body;
-    if (!email || !password)
+    const { username, password } = req.body;
+    if (!username || !password)
         throw ApiError.BAD_REQUEST;
-    const find = await userModel.find({ email }).exec();
+    const find = await userModel.find({ username }).exec();
     if (find.length === 0)
         throw ApiError.USERNAME_EMAIL_NOT_EXIST;
     if (!await bcryptCompare(find[0], password))

@@ -5,7 +5,7 @@ import Utils from '../../Utils';
 export interface IFeedback extends mongoose.Document {
 	title: string;
     content: string;
-    user_id: mongoose.Schema.Types.ObjectId;
+    userId: mongoose.Schema.Types.ObjectId;
     anonymouse: boolean;
 }
 
@@ -18,7 +18,7 @@ const feedbackSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    user_id: {
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
     },
@@ -28,7 +28,7 @@ const feedbackSchema = new mongoose.Schema({
     }
 });
 
-export const createFeedbackDTO = (obj: object) => _.pick(obj, ['title', 'content', 'user_id', 'anonymous']);
+export const createFeedbackDTO = (obj: object) => _.pick(obj, ['title', 'content', 'userId', 'anonymous']);
 
 export const feedbackModel = mongoose.model<IFeedback>('Feedback', feedbackSchema);
 
