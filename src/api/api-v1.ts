@@ -75,9 +75,16 @@ api.use("/logout", (_req, res) => {
     GET (/api/v1/store) => product object {name, price}
 */
 
-api.use ("/store", async (_req, res) => {
+api.get("/store", async (_req, res) => {
     res.send(await productCRUD.getAll());
 });
+
+api.put("/store", async (req, res) => {
+    const { user } = res.locals;
+    if (user.role != 99)
+        throw ApiError.NOT_PERMITTED;
+    res.send();
+})
 
 // const checkRole = (userRole: UserRole): express.RequestHandler => (_req, res, next) => {
 //     const { user, role } = getLocals(res);
