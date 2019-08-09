@@ -70,6 +70,15 @@ api.use("/logout", (_req, res) => {
     res.clearCookie(Config.TOKEN_HEADER).send();
 });
 
+/*
+    GET (/api/v1/store) => product object {name, price}
+*/
+
+api.use ("/store", (_req, res) => {
+    const { 
+
+});
+
 // const checkRole = (userRole: UserRole): express.RequestHandler => (_req, res, next) => {
 //     const { user, role } = getLocals(res);
 //     if (!user || role < userRole)
