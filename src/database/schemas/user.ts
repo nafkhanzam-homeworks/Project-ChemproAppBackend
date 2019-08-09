@@ -6,11 +6,10 @@ import express from 'express';
 import Utils from '../../Utils';
 
 export interface IUser extends mongoose.Document {
-	fullname: string;
+	username: string;
 	email: string;
 	password: string;
 	role: UserRole;
-	NIM: string;
 }
 
 export enum UserRole { // Will be used as integer greater or lower comparation
@@ -33,7 +32,7 @@ export const getLocals = ({ locals }: express.Response) => ({
 });
 
 const userSchema = new mongoose.Schema({
-	fullname: {
+	username: {
 		type: String,
 		required: true,
 		unique: true,
@@ -51,10 +50,9 @@ const userSchema = new mongoose.Schema({
 		type: UserRole,
 		default: UserRole.GUEST,
 	},
-	NIM: String,
 });
 
-export const createUserDTO = (obj: object) => _.pick(obj, ['fullname', 'email', 'password']);
+export const createUserDTO = (obj: object) => _.pick(obj, ['username', 'email', 'password']);
 
 export const userModel = mongoose.model<IUser>('User', userSchema);
 
