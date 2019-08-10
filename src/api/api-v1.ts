@@ -2,9 +2,9 @@ import express from "express";
 import ApiError from "../ApiError";
 import ApiWrapper from "../ApiWrapper";
 import Config from "../Config";
-import { bcryptCompare, createUserDTO, getLocals, userModel } from "../database/schemas/user";
+import { bcryptCompare, createUserDTO, getLocals, userModel, UserRole } from "../database/schemas/user";
 import Utils from "../Utils";
-import { productCRUD } from "../database/schemas/product";
+import { productCRUD, createProductDTO } from "../database/schemas/product";
 
 // TODO: Add api object to wrap the arguments to be catchable async function..
 const _api = express.Router();
@@ -72,19 +72,19 @@ api.use("/logout", (_req, res) => {
 });
 
 /*
-    GET (/api/v1/store) => product object {name, price}
+    GET (/api/v1/products) => product object {name, price}
 */
 
-api.get("/store", async (_req, res) => {
+api.get("/products", async (_req, res) => {
     res.send(await productCRUD.getAll());
 });
 
-api.put("/store", async (req, res) => {
+api.put("/products", async (req, res) => {
     const { user } = res.locals;
-    if (user.role != 99)
+    if (user.role != UserRole.ADMIN)
         throw ApiError.NOT_PERMITTED;
-    res.send();
-})
+    res.send(await productCRUD.post(createProductDTO(req.body)));
+});
 
 // const checkRole = (userRole: UserRole): express.RequestHandler => (_req, res, next) => {
 //     const { user, role } = getLocals(res);

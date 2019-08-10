@@ -23,6 +23,7 @@ const productSchema = new mongoose.Schema({
     },
     qty: {
         type: Number,
+        default: 0,
     },
     description: {
         type: String,
@@ -34,7 +35,7 @@ const productSchema = new mongoose.Schema({
     }
 });
 
-export const createProductDTO = (obj: object) => _.pick(obj, ['img', 'price', 'description']);
+export const createProductDTO = (obj: object) => _.pick(obj, ['name', 'img', 'price', 'description', 'qty']);
 
 export const productModel = mongoose.model<IProduct>('Product', productSchema);
 
